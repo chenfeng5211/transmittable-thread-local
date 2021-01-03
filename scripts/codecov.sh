@@ -8,4 +8,5 @@ source ./common_build.sh
 switch_to_jdk 8
 runCmd "${MVN_CMD[@]}" clean
 runCmd "${MVN_CMD[@]}" cobertura:cobertura
-runCmd codecov
+
+bash <(curl -s https://codecov.io/bash)
