@@ -61,16 +61,16 @@ mvnBuildJar() {
             #
             # De-activate a maven profile from command line
             # https://stackoverflow.com/questions/25201430
-            runCmd "${MVN_CMD[@]}" install -DperformRelease -P '!gen-sign' || die "fail to build jar!"
+            logAndRun "${MVN_CMD[@]}" install -DperformRelease -P '!gen-sign' || die "fail to build jar!"
         else
-            runCmd "${MVN_CMD[@]}" package -Dmaven.test.skip=true || die "fail to build jar!"
+            logAndRun "${MVN_CMD[@]}" package -Dmaven.test.skip=true || die "fail to build jar!"
         fi
     fi
 }
 
 mvnCompileTest() {
     if [ ! -e "target/test-classes/"  -o  "target/test-classes/" -ot src/  ]; then
-        runCmd "${MVN_CMD[@]}" test-compile || die "fail to mvn test-compile!" || die "fail to compile test!"
+        logAndRun "${MVN_CMD[@]}" test-compile || die "fail to mvn test-compile!" || die "fail to compile test!"
     fi
 }
 
@@ -80,7 +80,7 @@ mvnCopyDependencies() {
     if [ ! -e "$dependencies_dir" ]; then
         # https://maven.apache.org/plugins/maven-dependency-plugin/copy-dependencies-mojo.html
         # exclude repackaged and shaded javassist libs
-        runCmd "${MVN_CMD[@]}" dependency:copy-dependencies -DincludeScope=test -DexcludeArtifactIds=javassist,jsr305,spotbugs-annotations || die "fail to mvn copy-dependencies!"
+        logAndRun "${MVN_CMD[@]}" dependency:copy-dependencies -DincludeScope=test -DexcludeArtifactIds=javassist,jsr305,spotbugs-annotations || die "fail to mvn copy-dependencies!"
     fi
 }
 
@@ -124,5 +124,5 @@ getJUnitTestCases() {
 #################################################################################
 
 if [ "${1:-}" != "skipClean" ]; then
-    runCmd mvnClean
+    logAndRun mvnClean
 fi

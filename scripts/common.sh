@@ -66,7 +66,7 @@ headInfo() {
     echo
 }
 
-runCmd() {
+logAndRun() {
     blueEcho "Run under work directory $PWD :$nl$*"
     time "$@"
 }

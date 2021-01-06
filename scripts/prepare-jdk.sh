@@ -21,7 +21,7 @@ fi
 set +u
 # shellcheck disable=SC1090
 source "$HOME/.sdkman/bin/sdkman-init.sh"
-[ -n "$this_time_install_sdk_man" ] && runCmd sdk ls java
+[ -n "$this_time_install_sdk_man" ] && logAndRun sdk ls java
 set -u
 
 jdks_install_by_sdkman=(
@@ -64,7 +64,7 @@ setJdkHomeVarsAndInstallJdk() {
             # install jdk by sdkman
             [ ! -d "$jdkHomePath" ] && {
                 set +u
-                runCmd sdk install java "$jdkNameOfSdkman" || die "fail to install jdk $jdkNameOfSdkman by sdkman"
+                logAndRun sdk install java "$jdkNameOfSdkman" || die "fail to install jdk $jdkNameOfSdkman by sdkman"
                 set -u
             }
         fi

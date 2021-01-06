@@ -20,7 +20,7 @@ for base_version in 2.5.0 2.6.0 2.7.0 2.10.2; do
     url="https://repo1.maven.org/maven2/com/alibaba/transmittable-thread-local/$base_version/transmittable-thread-local-$base_version.jar"
     base_jar="transmittable-thread-local-$base_version.jar"
     if [ ! -f "$base_jar" ]; then
-        runCmd wget --quiet "$url"
+        logAndRun wget --quiet "$url"
     fi
 
     "$JCC" -show-packages -check-annotations -skip-internal-packages '\.(javassist|utils?|internal)(\.|$)' \
